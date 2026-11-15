@@ -73,7 +73,7 @@ function loadOrCreateAuth() {
   try {
     fs.writeFileSync(
       initialCredentialsFile,
-      `Usuario: admin\\nContraseña inicial: ${initialPassword}\\n\\nInicia sesión en el panel y este archivo se eliminará automáticamente.\\n`,
+      `Usuario: admin\nContraseña inicial: ${initialPassword}\n\nInicia sesión en el panel y este archivo se eliminará automáticamente.\n`,
       { encoding: 'utf8', mode: 0o600, flag: 'wx' }
     );
   } catch (error) {
