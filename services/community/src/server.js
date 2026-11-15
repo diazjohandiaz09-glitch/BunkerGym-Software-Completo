@@ -2,6 +2,7 @@ import express from 'express';
 import communityRoutes from './routes/community-routes.js';
 
 const app = express();
+app.disable('x-powered-by');
 const port = Number(process.env.PORT || 3004);
 
 app.get('/health', (_request, response) => {
