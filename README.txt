@@ -25,9 +25,9 @@ EJECUCIÓN LOCAL:
 
 ACCESO AL PANEL:
 - Usuario inicial: admin.
-- En el primer arranque, el supervisor genera una contraseña aleatoria y la muestra una sola vez en la consola donde se ejecuta npm run dev.
-- Guarda esa contraseña en un gestor de contraseñas. No se almacena en el proyecto web.
-- El hash de contraseña y la clave de firma se guardan fuera del directorio público, en la carpeta hermana: bunker_gym_web - copia.private/admin-auth.json.
+- En el primer arranque, el supervisor genera una contraseña aleatoria y la guarda en el archivo privado bunker_gym_web - copia.private/admin-initial-credentials.txt. Nunca imprime la contraseña en consola ni en los registros.
+- Consulta ese archivo directamente en el equipo donde se ejecuta el supervisor, guarda la contraseña en un gestor de contraseñas e inicia sesión como admin. El archivo temporal se elimina automáticamente después del primer inicio de sesión correcto.
+- Tanto el archivo temporal de entrega como el hash de contraseña y la clave de firma quedan fuera del directorio público, en la carpeta hermana: bunker_gym_web - copia.private/. Los archivos se crean con permisos restrictivos (0600 cuando el sistema operativo los admite).
 - Las sesiones duran 8 horas, se guardan en cookies HttpOnly y SameSite=Strict, y se invalidan al cerrar sesión o reiniciar el supervisor.
 - Dentro del panel, el botón CAMBIAR CONTRASEÑA abre un formulario que exige contraseña actual, nueva contraseña y confirmación.
 - La nueva contraseña requiere al menos 12 y como máximo 128 caracteres; el servidor rechaza la contraseña actual incorrecta, la confirmación distinta y la reutilización de la contraseña vigente.
