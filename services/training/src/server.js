@@ -2,6 +2,7 @@ import express from 'express';
 import trainingRoutes from './routes/training-routes.js';
 
 const app = express();
+app.disable('x-powered-by');
 const port = Number(process.env.PORT || 3002);
 
 app.get('/health', (_request, response) => {
