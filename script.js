@@ -571,7 +571,7 @@ async function loadStoreProducts() {
     message.className = 'shop-empty';
     message.textContent = 'No fue posible cargar el catálogo. Comprueba el microservicio Tienda virtual desde el panel administrativo.';
     storeProductsGrid.append(message);
-    console.warn('Tienda Bunker:', error.message);
+    console.warn('Tienda Bunker: no fue posible cargar el catálogo.');
   }
 }
 
@@ -729,7 +729,7 @@ async function loadSiteSettings() {
     const ticker = document.querySelector('.ticker');
     if (ticker) ticker.hidden = settings.announcementEnabled === false;
   } catch (error) {
-    console.warn('No se pudo leer la configuración web:', error.message);
+    console.warn('No se pudo leer la configuración web.');
   }
 }
 
