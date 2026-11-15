@@ -2,6 +2,7 @@ import express from 'express';
 import recoveryRoutes from './routes/recovery-routes.js';
 
 const app = express();
+app.disable('x-powered-by');
 const port = Number(process.env.PORT || 3003);
 
 app.get('/health', (_request, response) => {
