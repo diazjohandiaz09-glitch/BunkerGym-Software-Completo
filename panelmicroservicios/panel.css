@@ -8,8 +8,8 @@ button,input{font:inherit}
 .panel-header{min-height:86px;padding:14px max(5vw,24px);display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid #292929;background:#090909}
 .brand{display:flex;align-items:center;gap:12px}
 .brand img{width:54px;height:54px;object-fit:contain}
-.brand b{display:block;font:25px/1 Anton;letter-spacing:1px}
-.brand small{display:block;margin-top:4px;color:var(--yellow);font:800 10px "Barlow Condensed";letter-spacing:3px}
+.brand b{display:block;font:25px/1 Anton, sans-serif;letter-spacing:1px}
+.brand small{display:block;margin-top:4px;color:var(--yellow);font:800 10px "Barlow Condensed", sans-serif;letter-spacing:3px}
 .header-actions{display:flex;align-items:center;gap:26px}
 .local-tag{color:#a99a59;font-size:9px;font-weight:900;letter-spacing:1.7px}
 .local-tag i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:8px;box-shadow:0 0 0 4px #72d99419}
@@ -19,7 +19,7 @@ button,input{font:inherit}
 .panel-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:45px;margin-bottom:42px}
 .eyebrow{margin:0;color:var(--yellow);font-size:10px;font-weight:900;letter-spacing:2.4px}
 h1,h2,h3,h4,p{margin-top:0}
-h1{margin:14px 0 18px;font:clamp(58px,8vw,96px)/.88 Anton;letter-spacing:.4px}
+h1{margin:14px 0 18px;font:clamp(58px,8vw,96px)/.88 Anton, sans-serif;letter-spacing:.4px}
 h1 span{color:var(--yellow)}
 .intro-copy{max-width:660px;margin:0;color:#aaa;font-size:13px;line-height:1.9}
 .supervisor-card{min-width:255px;display:flex;align-items:center;gap:15px;padding:19px 21px;border:1px solid #413911;background:#17160f}
@@ -30,13 +30,13 @@ h1 span{color:var(--yellow)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:52px}
 .stats article{padding:20px 22px;border:1px solid #333;background:linear-gradient(145deg,#1b1b1b,#111)}
 .stats article span{display:block;color:#999;font-size:9px;font-weight:900;letter-spacing:1.6px}
-.stats article b{display:block;margin-top:8px;font:42px/1 Anton;color:var(--yellow)}
+.stats article b{display:block;margin-top:8px;font:42px/1 Anton, sans-serif;color:var(--yellow)}
 .stats article b.green{color:var(--green)}
 .stats article b.red{color:var(--red)}
 .stats article b.amber{color:var(--amber)}
 .control-section{padding-top:30px;border-top:1px solid #373737}
 .section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
-.section-heading h2{margin:8px 0 0;font:34px/1 Anton;letter-spacing:.4px}
+.section-heading h2{margin:8px 0 0;font:34px/1 Anton, sans-serif;letter-spacing:.4px}
 .refresh-button{cursor:pointer;padding:11px 15px;border:1px solid #625417;background:transparent;color:var(--yellow);font-size:15px;transition:.2s}
 .refresh-button span{font-size:9px;font-weight:900;letter-spacing:1.2px}
 .refresh-button:hover{background:var(--yellow);color:#080808}
@@ -47,7 +47,7 @@ h1 span{color:var(--yellow)}
 .service-card--disabled{border-left-color:var(--red);background:linear-gradient(145deg,#211615,#121010)}
 .service-card--offline{border-left-color:var(--amber)}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}
-.card-title{font:26px/1.1 Anton;margin:0}
+.card-title{font:26px/1.1 Anton, sans-serif;margin:0}
 .card-meta{display:block;margin-top:7px;color:#777;font-size:8px;letter-spacing:1.3px}
 .status-badge{padding:5px 8px;white-space:nowrap;font-size:8px;font-weight:900;letter-spacing:1px}
 .status-badge--online{color:#8fd4a4;background:#102719}
@@ -106,7 +106,7 @@ h1 span{color:var(--yellow)}
 .password-modal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:22px;background:#000c;backdrop-filter:blur(8px)}
 .password-modal[hidden]{display:none}
 .password-modal-card{position:relative;width:min(520px,100%);max-height:min(92vh,900px);overflow:auto;padding:clamp(24px,5vw,42px);border:1px solid #5a4c16;border-top:3px solid var(--yellow);background:linear-gradient(145deg,#1b1b1b,#0d0d0d);box-shadow:0 26px 90px #000b}
-.password-modal-card h2{margin:14px 0;font:clamp(40px,6vw,58px)/.92 Anton}
+.password-modal-card h2{margin:14px 0;font:clamp(40px,6vw,58px)/.92 Anton, sans-serif}
 .password-modal-card h2 span{color:var(--yellow)}
 .modal-close{position:absolute;top:12px;right:16px;width:35px;height:35px;border:1px solid #444;background:#111;color:#ddd;font-size:24px;cursor:pointer}
 .modal-close:hover{border-color:var(--yellow);color:var(--yellow)}
@@ -133,12 +133,12 @@ h1 span{color:var(--yellow)}
 .order-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}
 .order-metrics article{padding:17px;border:1px solid #343434;background:#171717}
 .order-metrics span{display:block;color:#999;font-size:8px;font-weight:900;letter-spacing:1.2px}
-.order-metrics b{display:block;margin-top:8px;color:var(--yellow);font:30px Anton}
+.order-metrics b{display:block;margin-top:8px;color:var(--yellow);font:30px Anton, sans-serif}
 .admin-list{display:grid;gap:12px}
 .order-admin-card,.catalog-admin-card{padding:19px;border:1px solid #373737;background:linear-gradient(145deg,#1b1b1b,#101010)}
 .order-admin-head,.order-admin-foot{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .order-admin-title b,.order-admin-title small{display:block}
-.order-admin-title b{color:var(--yellow);font:22px Anton;letter-spacing:.5px}
+.order-admin-title b{color:var(--yellow);font:22px Anton, sans-serif;letter-spacing:.5px}
 .order-admin-title small,.order-customer span,.order-admin-foot small{color:#888;font-size:9px}
 .order-status{padding:6px 9px;background:#28210e;color:#e8cf74;font-size:8px;font-weight:900;letter-spacing:1px}
 .order-customer{display:grid;gap:4px;margin:17px 0 9px}
@@ -147,7 +147,7 @@ h1 span{color:var(--yellow)}
 .order-lines{padding:10px 0;border-top:1px solid #333;border-bottom:1px solid #333}
 .order-lines p{margin:5px 0;color:#bbb;font-size:10px}
 .order-admin-foot{margin:12px 0}
-.order-admin-foot b{color:#f4c400;font:23px Anton}
+.order-admin-foot b{color:#f4c400;font:23px Anton, sans-serif}
 .order-status-control{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#aaa;font-size:8px;font-weight:900;letter-spacing:1px}
 .order-status-control select,.admin-form input,.admin-form textarea,.admin-form select{width:100%;min-height:42px;padding:10px 12px;border:1px solid #444;border-radius:0;background:#090909;color:#eee;outline:none;font:11px Inter,Arial,sans-serif}
 .order-status-control select{max-width:210px}
@@ -157,17 +157,17 @@ h1 span{color:var(--yellow)}
 .catalog-admin-card>img{width:86px;height:86px;object-fit:contain;background:#242114;padding:8px}
 .catalog-admin-details{min-width:0}
 .catalog-admin-details b,.catalog-admin-details small,.catalog-admin-details strong{display:block}
-.catalog-admin-details b{font:20px/1.1 Anton}
+.catalog-admin-details b{font:20px/1.1 Anton, sans-serif}
 .catalog-admin-details small{margin-top:5px;color:#999;font-size:9px}
 .catalog-admin-details p{margin:8px 0;color:#aaa;font-size:10px;line-height:1.6}
-.catalog-admin-details strong{color:var(--yellow);font:20px Anton}
+.catalog-admin-details strong{color:var(--yellow);font:20px Anton, sans-serif}
 .catalog-admin-actions{grid-column:1/-1;display:flex;gap:8px}
 .admin-secondary-button,.admin-primary-button{cursor:pointer;padding:10px 13px;border:1px solid #665514;background:#18160c;color:var(--yellow);font-size:8px;font-weight:900;letter-spacing:1px}
 .admin-secondary-button:hover{background:#f4c400;color:#080808}
 .admin-primary-button{background:#f4c400;color:#080808;border-color:#f4c400}
 .admin-primary-button:disabled{opacity:.5;cursor:wait}
 .admin-form{display:grid;gap:9px;padding:20px;border:1px solid #4b4118;background:#17160f}
-.admin-form-heading h3{margin:7px 0 12px;font:25px Anton}
+.admin-form-heading h3{margin:7px 0 12px;font:25px Anton, sans-serif}
 .admin-form>label,.admin-form label{color:#c7b86e;font-size:8px;font-weight:900;letter-spacing:1.2px}
 .form-two-columns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .form-two-columns>div{display:grid;gap:7px}
