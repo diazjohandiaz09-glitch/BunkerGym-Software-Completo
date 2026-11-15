@@ -48,7 +48,18 @@ function validateCustomer(input) {
     notes: String(input?.notes || '').trim().slice(0, 500)
   };
   if (customer.name.length < 3) throw new Error('Escribe el nombre completo del comprador.');
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) throw new Error('Escribe un correo electrónico válido.');
+  const emailParts = customer.email.split('@');
+  const localPart = emailParts[0] || '';
+  const domain = emailParts[1] || '';
+  const domainLabels = domain.split('.');
+  const validEmail = emailParts.length === 2 &&
+    localPart.length > 0 && localPart.length <= 64 &&
+    domain.length <= 253 && domainLabels.length >= 2 &&
+    domainLabels.every(label =>
+      label.length >= 1 && label.length <= 63 &&
+      /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i.test(label)
+    );
+  if (!validEmail || /\s/.test(customer.email)) throw new Error('Escribe un correo electrónico válido.');
   if (customer.phone.replace(/\D/g, '').length < 7) throw new Error('Escribe un teléfono válido.');
   if (customer.address.length < 6 || customer.city.length < 2) throw new Error('Completa la dirección y la ciudad.');
   return customer;
