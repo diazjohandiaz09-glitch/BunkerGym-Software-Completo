@@ -1,6 +1,7 @@
 import express from 'express';
 import facilitiesRoutes from './routes/facilities-routes.js';
 const app = express();
+app.disable('x-powered-by');
 const port = Number(process.env.PORT || 3007);
 app.get('/health', (_request, response) => response.json({ service: 'facilities', status: 'ok' }));
 app.use('/api/facilities', facilitiesRoutes);
