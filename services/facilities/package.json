@@ -1,0 +1,4 @@
+{
+  "name": "@bunker/facilities-service", "private": true, "type": "module",
+  "scripts": { "dev": "node src/server.js" }, "dependencies": { "express": "^5.1.0" }
+}

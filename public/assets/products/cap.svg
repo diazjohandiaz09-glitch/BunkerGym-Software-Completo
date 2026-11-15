@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#29220c"/><stop offset="1" stop-color="#080808"/></linearGradient><linearGradient id="cap" x2="0" y2="1"><stop stop-color="#333"/><stop offset="1" stop-color="#070707"/></linearGradient></defs>
+<rect width="720" height="620" fill="url(#bg)"/><circle cx="360" cy="285" r="230" fill="#f4c400" opacity=".05"/>
+<path d="M170 355q-5-185 190-205 162-12 205 170l-3 58q-188 78-392-23z" fill="url(#cap)" stroke="#626262" stroke-width="6"/>
+<path d="M172 349q-80 47-78 88 210 63 484-15-10-50-85-79" fill="#0a0a0a" stroke="#575757" stroke-width="5"/>
+<path d="M355 151q-16 92 8 145" stroke="#555" stroke-width="5" fill="none"/><text x="365" y="305" fill="#f4c400" font-family="Arial,sans-serif" font-size="45" font-weight="900" letter-spacing="3" text-anchor="middle">BUNKER</text><path d="M315 327h100" stroke="#eee" stroke-width="3"/>
+<text x="45" y="565" fill="#f4c400" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="4">04 / IDENTIDAD BUNKER</text></svg>

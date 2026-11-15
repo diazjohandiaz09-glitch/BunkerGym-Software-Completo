@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#29230e"/><stop offset="1" stop-color="#080808"/></linearGradient><linearGradient id="tee" x2="0" y2="1"><stop stop-color="#282828"/><stop offset="1" stop-color="#090909"/></linearGradient><filter id="shadow"><feGaussianBlur stdDeviation="18"/></filter></defs>
+<rect width="720" height="620" fill="url(#bg)"/><circle cx="555" cy="120" r="180" fill="#f4c400" opacity=".07"/><ellipse cx="360" cy="525" rx="175" ry="28" fill="#000" opacity=".75" filter="url(#shadow)"/>
+<path d="M250 105 306 80h108l56 25 112 67-58 100-61-32v255H257V240l-61 32-58-100z" fill="url(#tee)" stroke="#565656" stroke-width="5" stroke-linejoin="round"/>
+<path d="M306 80q54 58 108 0" fill="none" stroke="#555" stroke-width="5"/><path d="M258 240 197 272m265-32 61 32" stroke="#555" stroke-width="4"/>
+<text x="360" y="295" fill="#f4c400" font-family="Arial,sans-serif" font-weight="900" font-size="54" letter-spacing="3" text-anchor="middle">BUNKER</text><text x="360" y="334" fill="#d7d7d7" font-family="Arial,sans-serif" font-weight="700" font-size="20" letter-spacing="9" text-anchor="middle">VIEJA ESCUELA</text>
+<path d="M316 365h88" stroke="#f4c400" stroke-width="4"/><text x="360" y="405" fill="#999" font-family="Arial,sans-serif" font-size="14" letter-spacing="4" text-anchor="middle">EST. GIRARDOT</text>
+<text x="45" y="565" fill="#f4c400" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="4">01 / ROPA BUNKER</text></svg>

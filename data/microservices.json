@@ -1,0 +1,14 @@
+{
+  "gym": true,
+  "training": true,
+  "recovery": true,
+  "community": true,
+  "contact": true,
+  "plans": true,
+  "facilities": true,
+  "faq": true,
+  "store": true,
+  "orders": true,
+  "site": true,
+  "gallery": true
+}

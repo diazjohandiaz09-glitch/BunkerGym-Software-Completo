@@ -1,0 +1,11 @@
+{
+  "name": "bunker-gym-web",
+  "private": true,
+  "type": "module",
+  "workspaces": ["services/*"],
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --names WEB,ADMIN \"vite --host 127.0.0.1\" \"npm run dev --workspace=@bunker/admin-service\"",
+    "build": "vite build"
+  },
+  "devDependencies": { "concurrently": "^9.2.1", "vite": "^6.0.0" }
+}

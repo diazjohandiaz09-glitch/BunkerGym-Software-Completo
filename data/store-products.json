@@ -1,0 +1,72 @@
+[
+  {
+    "id": "camiseta-bunker",
+    "name": "Camiseta Bunker · Vieja Escuela",
+    "category": "Ropa",
+    "description": "Camiseta negra de estilo clásico para representar la cultura del hierro dentro y fuera del gimnasio.",
+    "price": 68000,
+    "stock": 17,
+    "image": "/assets/products/shirt.svg",
+    "active": true
+  },
+  {
+    "id": "shaker-bunker",
+    "name": "Shaker Bunker 750 ml",
+    "category": "Accesorios",
+    "description": "Botella mezcladora de entrenamiento con diseño negro y acento amarillo. Imagen ilustrativa.",
+    "price": 35000,
+    "stock": 24,
+    "image": "/assets/products/shaker.svg",
+    "active": true
+  },
+  {
+    "id": "straps-fuerza",
+    "name": "Straps de levantamiento",
+    "category": "Accesorios",
+    "description": "Correas de agarre para acompañar tus sesiones de fuerza. Imagen ilustrativa.",
+    "price": 42000,
+    "stock": 15,
+    "image": "/assets/products/straps.svg",
+    "active": true
+  },
+  {
+    "id": "gorra-bunker",
+    "name": "Gorra Bunker",
+    "category": "Ropa",
+    "description": "Gorra negra de inspiración old school con identidad Bunker. Imagen ilustrativa.",
+    "price": 48000,
+    "stock": 8,
+    "image": "/assets/products/cap.svg",
+    "active": true
+  },
+  {
+    "id": "whey-protein-demo",
+    "name": "Whey Protein · Presentación demo",
+    "category": "Suplementos",
+    "description": "Fotografía de referencia de proteína whey. Producto, marca, presentación, precio y disponibilidad pendientes de confirmación comercial.",
+    "price": 159000,
+    "stock": 12,
+    "image": "/assets/products/whey-protein.jpg",
+    "active": true
+  },
+  {
+    "id": "creatina-demo",
+    "name": "Creatina monohidratada · Presentación demo",
+    "category": "Suplementos",
+    "description": "Fotografía de referencia de creatina monohidratada. Producto, marca, presentación, precio y disponibilidad pendientes de confirmación comercial.",
+    "price": 79000,
+    "stock": 15,
+    "image": "/assets/products/creatina.jpg",
+    "active": true
+  },
+  {
+    "id": "preworkout-demo",
+    "name": "Pre-entreno · Presentación demo",
+    "category": "Suplementos",
+    "description": "Fotografía de referencia de suplemento pre-entreno. Producto, marca, presentación, precio y disponibilidad pendientes de confirmación comercial.",
+    "price": 95000,
+    "stock": 8,
+    "image": "/assets/products/preworkout.jpg",
+    "active": true
+  }
+]

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="Centro de administración local de microservicios Bunker Gym.">
+  <base href="/panelmicroservicios/">
+  <title>Panel de microservicios | Bunker Gym</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./panel.css">
+</head>
+<body>
+  <div class="topline"></div>
+  <header class="panel-header">
+    <a class="brand" href="/" aria-label="Volver a Bunker Gym">
+      <img src="../assets/logo-bunker.png" alt="Bunker Gym">
+      <span><b>BUNKER GYM</b><small>VIEJA ESCUELA</small></span>
+    </a>
+    <div class="header-actions">
+      <span class="local-tag"><i></i> ADMINISTRACIÓN LOCAL</span>
+      <button type="button" class="security-button" id="password-open" hidden>CAMBIAR CONTRASEÑA</button>
+      <button type="button" class="logout-button" id="logout-button" hidden>CERRAR SESIÓN ↗</button>
+      <a class="back-link" href="/">← VOLVER A LA WEB</a>
+    </div>
+  </header>
+
+  <main class="login-shell" id="login-screen">
+    <section class="login-card">
+      <p class="eyebrow">ÁREA RESTRINGIDA / BUNKER GYM</p>
+      <h1>ACCESO<br><span>ADMINISTRATIVO.</span></h1>
+      <p class="login-copy">Ingresa con tus credenciales para administrar los microservicios de Bunker Gym.</p>
+      <form id="login-form" class="login-form">
+        <label for="login-username">USUARIO</label>
+        <input id="login-username" name="username" type="text" value="admin" autocomplete="username" required maxlength="80">
+        <label for="login-password">CONTRASEÑA</label>
+        <div class="password-field">
+          <input id="login-password" name="password" type="password" autocomplete="current-password" required maxlength="512">
+          <button type="button" id="toggle-password" aria-pressed="false">MOSTRAR</button>
+        </div>
+        <button class="login-submit" id="login-submit" type="submit">INICIAR SESIÓN <span>↗</span></button>
+        <p class="login-feedback" id="login-feedback" role="alert" aria-live="polite"></p>
+      </form>
+      <div class="login-footnote"><span class="secure-dot"></span> CONEXIÓN LOCAL · SESIÓN PRIVADA DE ADMINISTRACIÓN</div>
+    </section>
+  </main>
+
+  <main class="panel-main" id="dashboard" hidden>
+    <section class="panel-intro">
+      <div>
+        <p class="eyebrow">BUNKER CONTROL CENTER / 01</p>
+        <h1>PANEL DE<br><span>MICROSERVICIOS.</span></h1>
+        <p class="intro-copy">Administra cada módulo de la plataforma. Los interruptores detienen o inician el proceso real de cada microservicio y actualizan su disponibilidad en la página pública.</p>
+      </div>
+      <div class="supervisor-card">
+        <span class="pulse"></span>
+        <div><b>SUPERVISOR DE SERVICIOS</b><small id="supervisor-state">CONECTANDO…</small></div>
+      </div>
+    </section>
+
+    <nav class="admin-tabs" id="admin-tabs" aria-label="Herramientas administrativas">
+      <button type="button" class="admin-tab is-active" data-tab-target="services">MICROSERVICIOS</button>
+      <button type="button" class="admin-tab" data-tab-target="orders">PEDIDOS</button>
+      <button type="button" class="admin-tab" data-tab-target="catalog">CATÁLOGO</button>
+      <button type="button" class="admin-tab" data-tab-target="site">CONFIGURAR WEB</button>
+    </nav>
+
+    <section class="stats" data-admin-tab-panel="services" aria-label="Resumen de microservicios">
+      <article><span>TOTAL DE SERVICIOS</span><b id="stat-total">—</b></article>
+      <article><span>EN LÍNEA</span><b class="green" id="stat-online">—</b></article>
+      <article><span>APAGADOS</span><b class="red" id="stat-disabled">—</b></article>
+      <article><span>NO DISPONIBLES</span><b class="amber" id="stat-offline">—</b></article>
+    </section>
+
+    <section class="control-section" data-admin-tab-panel="services">
+      <div class="section-heading">
+        <div><p class="eyebrow">GESTIÓN DE PROCESOS</p><h2>ESTADO DE LOS MÓDULOS</h2></div>
+        <button type="button" class="refresh-button" id="refresh-button">↻ <span>ACTUALIZAR</span></button>
+      </div>
+      <p class="section-description">Activa el interruptor para encender el servicio o desactívalo para detenerlo. Los cambios se guardan y se aplican en el servidor local.</p>
+      <div class="service-groups" id="service-groups" aria-live="polite">
+        <p class="loading-state">Consultando el estado de los microservicios…</p>
+      </div>
+      <div class="feedback" id="feedback" role="status">Iniciando conexión con el supervisor…</div>
+    </section>
+
+    <section class="notice" data-admin-tab-panel="services">
+      <span class="notice-mark">!</span>
+      <div><b>INFORMACIÓN DE SEGURIDAD</b><p>Las rutas de administración requieren una sesión firmada, cookies HttpOnly/SameSite y validación del origen. Mantén este panel en una red de confianza y usa HTTPS si lo despliegas fuera del equipo local.</p></div>
+    </section>
+
+    <section class="admin-tab-panel" data-admin-tab-panel="orders" hidden>
+      <div class="section-heading admin-module-heading">
+        <div><p class="eyebrow">COMERCIO DIGITAL / 01</p><h2>GESTIÓN DE PEDIDOS</h2></div>
+        <button type="button" class="refresh-button" id="orders-refresh">↻ <span>ACTUALIZAR</span></button>
+      </div>
+      <p class="section-description">Consulta las compras registradas en la tienda de demostración, revisa los datos del pedido y actualiza su estado operativo.</p>
+      <div class="order-metrics">
+        <article><span>PEDIDOS REGISTRADOS</span><b id="orders-total">0</b></article>
+        <article><span>PENDIENTES</span><b id="orders-pending">0</b></article>
+        <article><span>VALOR REGISTRADO</span><b id="orders-value">$ 0</b></article>
+      </div>
+      <div class="admin-list" id="orders-list"><p class="loading-state">Cargando pedidos…</p></div>
+      <p class="feedback" id="orders-feedback" role="status"></p>
+    </section>
+
+    <section class="admin-tab-panel" data-admin-tab-panel="catalog" hidden>
+      <div class="section-heading admin-module-heading">
+        <div><p class="eyebrow">COMERCIO DIGITAL / 02</p><h2>CATÁLOGO E INVENTARIO</h2></div>
+        <button type="button" class="refresh-button" id="catalog-refresh">↻ <span>ACTUALIZAR</span></button>
+      </div>
+      <p class="section-description">Crea productos, edita precios y existencias, o desactiva artículos. Los cambios se reflejan en la tienda pública.</p>
+      <div class="catalog-layout">
+        <div class="admin-list" id="catalog-list"><p class="loading-state">Cargando catálogo…</p></div>
+        <form class="admin-form catalog-form" id="product-form">
+          <div class="admin-form-heading"><p class="eyebrow">EDITOR DE PRODUCTOS</p><h3 id="product-form-title">NUEVO PRODUCTO</h3></div>
+          <input id="product-id" type="hidden">
+          <label for="product-name">NOMBRE</label>
+          <input id="product-name" required maxlength="90" placeholder="Ej. Camiseta Bunker">
+          <label for="product-category">CATEGORÍA</label>
+          <select id="product-category"><option>Ropa</option><option>Accesorios</option><option>Suplementos</option><option>Equipamiento</option><option>General</option></select>
+          <label for="product-description">DESCRIPCIÓN</label>
+          <textarea id="product-description" required rows="3" maxlength="500" placeholder="Descripción del producto"></textarea>
+          <div class="form-two-columns">
+            <div><label for="product-price">PRECIO (COP)</label><input id="product-price" type="number" min="100" step="100" required></div>
+            <div><label for="product-stock">INVENTARIO</label><input id="product-stock" type="number" min="0" step="1" required></div>
+          </div>
+          <label for="product-image">IMAGEN</label>
+          <select id="product-image">
+            <option value="/assets/products/shirt.svg">Camiseta Bunker</option>
+            <option value="/assets/products/shaker.svg">Shaker</option>
+            <option value="/assets/products/straps.svg">Straps</option>
+            <option value="/assets/products/cap.svg">Gorra</option>
+            <option value="/assets/products/whey-protein.jpg">Fotografía · Whey Protein</option>
+            <option value="/assets/products/creatina.jpg">Fotografía · Creatina monohidratada</option>
+            <option value="/assets/products/preworkout.jpg">Fotografía · Pre-entreno</option>
+            <option value="/assets/gym-interior.jpg">Foto del gimnasio</option>
+            <option value="/assets/entrenamiento-1.jpg">Foto de entrenamiento 1</option>
+            <option value="/assets/entrenamiento-2.jpg">Foto de entrenamiento 2</option>
+          </select>
+          <label class="admin-checkbox"><input id="product-active" type="checkbox" checked> PRODUCTO ACTIVO EN LA TIENDA</label>
+          <div class="form-actions">
+            <button type="submit" class="admin-primary-button" id="product-save">GUARDAR PRODUCTO</button>
+            <button type="button" class="admin-secondary-button" id="product-reset">LIMPIAR</button>
+          </div>
+          <p class="feedback" id="catalog-feedback" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="admin-tab-panel" data-admin-tab-panel="site" hidden>
+      <div class="section-heading admin-module-heading">
+        <div><p class="eyebrow">CONTENIDO / IDENTIDAD BUNKER</p><h2>CONFIGURACIÓN DEL SITIO WEB</h2></div>
+        <button type="button" class="refresh-button" id="site-settings-refresh">↻ <span>RECARGAR</span></button>
+      </div>
+      <p class="section-description">Edita los titulares y textos principales de la página. Al guardar, la web pública leerá la nueva configuración desde el microservicio correspondiente.</p>
+      <form class="admin-form site-settings-form" id="site-settings-form">
+        <div class="site-settings-grid">
+          <div><label for="setting-announcement">MENSAJE DE CINTA</label><input id="setting-announcement" maxlength="500"></div>
+          <label class="admin-checkbox setting-toggle"><input id="setting-announcement-enabled" type="checkbox"> MOSTRAR CINTA EN LA WEB</label>
+          <div><label for="setting-hero-eyebrow">UBICACIÓN / ETIQUETA</label><input id="setting-hero-eyebrow" maxlength="500"></div>
+          <div><label for="setting-hero-title">TITULAR PRINCIPAL</label><input id="setting-hero-title" maxlength="500"></div>
+          <div><label for="setting-hero-accent">TEXTO DESTACADO</label><input id="setting-hero-accent" maxlength="500"></div>
+          <div class="full-width"><label for="setting-hero-lead">DESCRIPCIÓN PRINCIPAL</label><textarea id="setting-hero-lead" rows="3" maxlength="500"></textarea></div>
+          <div><label for="setting-about-title">TITULAR DE NOSOTROS</label><input id="setting-about-title" maxlength="500"></div>
+          <div><label for="setting-about-accent">TEXTO DESTACADO DE NOSOTROS</label><input id="setting-about-accent" maxlength="500"></div>
+          <div class="full-width"><label for="setting-about-text">DESCRIPCIÓN DE BUNKER GYM</label><textarea id="setting-about-text" rows="5" maxlength="500"></textarea></div>
+          <div><label for="setting-shop-title">TITULAR DE LA TIENDA</label><input id="setting-shop-title" maxlength="500"></div>
+          <div><label for="setting-shop-accent">TEXTO DESTACADO DE LA TIENDA</label><input id="setting-shop-accent" maxlength="500"></div>
+          <div class="full-width"><label for="setting-shop-description">DESCRIPCIÓN DE LA TIENDA</label><textarea id="setting-shop-description" rows="3" maxlength="500"></textarea></div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="admin-primary-button" id="site-settings-save">GUARDAR CONFIGURACIÓN WEB</button>
+          <button type="button" class="admin-secondary-button" id="site-settings-reset">DESCARTAR CAMBIOS</button>
+        </div>
+        <p class="feedback" id="site-settings-feedback" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <section class="password-modal" id="password-modal" hidden role="dialog" aria-modal="true" aria-labelledby="password-title">
+    <div class="password-modal-card">
+      <button type="button" class="modal-close" id="password-close" aria-label="Cerrar">×</button>
+      <p class="eyebrow">SEGURIDAD DE LA CUENTA / ADMINISTRADOR</p>
+      <h2 id="password-title">CAMBIAR<br><span>CONTRASEÑA.</span></h2>
+      <p class="modal-copy">Confirma tu contraseña actual y elige una nueva. La nueva contraseña debe tener al menos 12 caracteres.</p>
+      <form id="change-password-form" class="change-password-form">
+        <label for="current-password">CONTRASEÑA ACTUAL</label>
+        <input id="current-password" name="currentPassword" type="password" autocomplete="current-password" required maxlength="512">
+        <label for="new-password">NUEVA CONTRASEÑA</label>
+        <input id="new-password" name="newPassword" type="password" autocomplete="new-password" required minlength="12" maxlength="128" aria-describedby="password-requirement">
+        <small id="password-requirement">Mínimo 12 caracteres. No uses una contraseña que ya utilices en otros sitios.</small>
+        <label for="confirm-password">CONFIRMAR NUEVA CONTRASEÑA</label>
+        <input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password" required minlength="12" maxlength="128">
+        <p class="change-password-feedback" id="change-password-feedback" role="status" aria-live="polite"></p>
+        <div class="modal-actions">
+          <button type="button" class="modal-cancel" id="password-cancel">CANCELAR</button>
+          <button type="submit" class="login-submit" id="password-save">GUARDAR CONTRASEÑA <span>↗</span></button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="panel-footer">
+    <span>© <span id="year"></span> BUNKER GYM · CONTROL INTERNO</span>
+    <a href="/">VOLVER A BUNKER GYM ↗</a>
+  </footer>
+  <script type="module" src="./panel.js"></script>
+</body>
+</html>
