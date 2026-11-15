@@ -14,6 +14,9 @@ const stateFile = path.join(dataDir, 'microservices.json');
 // Las credenciales se guardan fuera del document root de Vite.
 const privateDir = path.resolve(root, '..', 'bunker_gym_web - copia.private');
 const authFile = path.join(privateDir, 'admin-auth.json');
+// Archivo temporal de entrega: queda fuera del directorio público y se elimina
+// automáticamente después del primer inicio de sesión correcto.
+const initialCredentialsFile = path.join(privateDir, 'admin-initial-credentials.txt');
 const sessionCookieName = 'bunker_admin_session';
 const sessionTtlMs = 8 * 60 * 60 * 1000;
 const passwordSaltBytes = 16;
@@ -65,13 +68,22 @@ function loadOrCreateAuth() {
     createdAt: new Date().toISOString()
   };
   fs.writeFileSync(authFile, JSON.stringify(created, null, 2), { encoding: 'utf8', mode: 0o600, flag: 'wx' });
-  console.log('==============================================');
-  console.log('CREDENCIALES INICIALES DEL PANEL BUNKER');
-  console.log('Usuario: admin');
-  console.log(`Contraseña inicial (guardar ahora): ${initialPassword}`);
-  console.log(`Archivo privado: ${authFile}`);
-  console.log('La contraseña no volverá a mostrarse al reiniciar.');
-  console.log('==============================================');
+  // No imprimir secretos en stdout/stderr: la contraseña se entrega una sola
+  // vez mediante un archivo privado legible por el usuario del sistema.
+  try {
+    fs.writeFileSync(
+      initialCredentialsFile,
+      `Usuario: admin\\nContraseña inicial: ${initialPassword}\\n\\nInicia sesión en el panel y este archivo se eliminará automáticamente.\\n`,
+      { encoding: 'utf8', mode: 0o600, flag: 'wx' }
+    );
+  } catch (error) {
+    // Evita dejar una instalación creada sin un medio de acceso recuperable.
+    try { fs.rmSync(authFile, { force: true }); } catch {}
+    throw new Error(`No se pudo crear el archivo privado de credenciales iniciales: ${error.message}`);
+  }
+  console.log('Credenciales iniciales creadas en un archivo privado fuera del directorio público.');
+  console.log(`Consulta el archivo: ${initialCredentialsFile}`);
+  console.log('El archivo se elimina automáticamente después del primer inicio de sesión correcto.');
   return created;
 }
 
@@ -322,6 +334,12 @@ app.post('/api/admin/auth/login', requireSameOrigin, (req, res) => {
   }
 
   loginFailures.delete(clientKey);
+  // La contraseña inicial deja de existir en texto claro tras el primer acceso válido.
+  try {
+    fs.rmSync(initialCredentialsFile, { force: true });
+  } catch (error) {
+    console.error('No se pudo eliminar el archivo temporal de credenciales iniciales:', error.message);
+  }
   const now = Date.now();
   for (const [id, expiry] of sessions) if (expiry <= now) sessions.delete(id);
   setSessionCookie(res, createSessionCookie(), Math.floor(sessionTtlMs / 1000));
