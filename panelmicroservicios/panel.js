@@ -364,6 +364,19 @@ function loadAdminWorkspace() { loadOrders(); loadCatalog(); loadSiteSettingsAdm
 function cop(value) {
   return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(Number(value) || 0);
 }
+function safeProductImageUrl(value) {
+  const fallback = '/assets/products/shirt.svg';
+  if (typeof value !== 'string' || value.length > 2048) return fallback;
+  try {
+    const parsed = new URL(value, window.location.origin);
+    const isLocalAsset = parsed.origin === window.location.origin && parsed.pathname.startsWith('/assets/');
+    const isSecureRemoteImage = parsed.protocol === 'https:' && !parsed.username && !parsed.password;
+    return isLocalAsset || isSecureRemoteImage ? parsed.href : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 function node(tag, className, content) {
   const element = document.createElement(tag);
   if (className) element.className = className;
@@ -467,7 +480,7 @@ async function loadCatalog() {
     cachedProducts.forEach(product => {
       const card = node('article','catalog-admin-card');
       const image = document.createElement('img');
-      image.src = product.image; image.alt = product.name; image.loading = 'lazy';
+      image.src = safeProductImageUrl(product.image); image.alt = product.name; image.loading = 'lazy';
       const details = node('div','catalog-admin-details');
       details.append(node('b','',product.name),node('small','',product.category),node('p','',product.description),node('strong','',cop(product.price)),node('small','', 'Inventario: ' + product.stock + ' · ' + (product.active ? 'ACTIVO' : 'INACTIVO')));
       const actions = node('div','catalog-admin-actions');
