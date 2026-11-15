@@ -2,6 +2,7 @@ import express from 'express';
 import contactRoutes from './routes/contact-routes.js';
 
 const app = express();
+app.disable('x-powered-by');
 const port = Number(process.env.PORT || 3005);
 
 app.get('/health', (_request, response) => {
