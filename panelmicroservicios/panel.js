@@ -51,7 +51,7 @@ function showDashboard() {
   logoutButton.hidden = false;
   passwordOpenButton.hidden = false;
   activateAdminTab('services');
-  loadAdminWorkspace();
+  void loadAdminWorkspace();
 }
 
 function setFeedback(message, isError = false) {
@@ -331,10 +331,10 @@ async function restartService(id) {
 
 $('refresh-button').addEventListener('click', () => refresh());
 $('year').textContent = new Date().getFullYear();
-checkSession();
+void checkSession();
 
 window.setInterval(() => {
-  if (!document.hidden && !dashboard.hidden) refresh({ quiet: true });
+  if (!document.hidden && !dashboard.hidden) void refresh({ quiet: true });
 }, 10000);
 // -----------------------------------------------------------------------------
 // Administración comercial: pedidos, catálogo y contenido del sitio.
@@ -354,12 +354,12 @@ function activateAdminTab(tab) {
     button.setAttribute('aria-selected', String(active));
   });
   adminTabPanels.forEach(panel => { panel.hidden = panel.dataset.adminTabPanel !== tab; });
-  if (tab === 'orders') loadOrders();
-  if (tab === 'catalog') loadCatalog();
-  if (tab === 'site') loadSiteSettingsAdmin();
+  if (tab === 'orders') void loadOrders();
+  if (tab === 'catalog') void loadCatalog();
+  if (tab === 'site') void loadSiteSettingsAdmin();
 }
 adminTabButtons.forEach(button => button.addEventListener('click', () => activateAdminTab(button.dataset.tabTarget)));
-function loadAdminWorkspace() { loadOrders(); loadCatalog(); loadSiteSettingsAdmin(); }
+function loadAdminWorkspace() { void loadOrders(); void loadCatalog(); void loadSiteSettingsAdmin(); }
 
 function cop(value) {
   return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(Number(value) || 0);
