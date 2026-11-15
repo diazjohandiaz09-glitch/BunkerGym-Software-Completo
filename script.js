@@ -735,9 +735,9 @@ async function loadSiteSettings() {
 
 const refreshButton = document.getElementById('admin-refresh');
 if (refreshButton) refreshButton.addEventListener('click', () => refreshServices());
-refreshServices();
+void refreshServices();
 window.setInterval(() => {
-  if (!document.hidden) refreshServices({ quiet: true });
+  if (!document.hidden) void refreshServices({ quiet: true });
 }, 10000);
 
 window.addEventListener('load', () => {
