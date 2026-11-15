@@ -35,7 +35,7 @@ ACCESO AL PANEL:
 - El cambio rota la clave de firma, cierra todas las sesiones anteriores y crea una sesión nueva solo para el navegador que hizo el cambio.
 - La verificación de contraseña actual también tiene bloqueo temporal después de seis intentos fallidos en 15 minutos.
 - Tras seis intentos fallidos de inicio de sesión desde el mismo cliente se bloquean nuevos intentos durante 15 minutos.
-- Para regenerar credenciales olvidadas: detén npm run dev, elimina el archivo admin-auth.json de la carpeta privada indicada y vuelve a iniciar npm run dev. Se generará una contraseña inicial nueva y se mostrará una sola vez en la consola.
+- Para regenerar credenciales olvidadas: detén npm run dev, elimina admin-auth.json y admin-initial-credentials.txt de la carpeta privada indicada y vuelve a iniciar npm run dev. Se generará una contraseña nueva en el archivo admin-initial-credentials.txt, nunca en la consola.
 - No compartas el archivo admin-auth.json ni la contraseña.
 
 ORIGEN Y COOKIES:
