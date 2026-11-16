@@ -1,4 +1,4 @@
-name: Tests y cobertura
+name: Tests, cobertura y SonarCloud
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   test:
-    name: Pruebas automatizadas y cobertura
+    name: Pruebas automatizadas, cobertura y compilación
     runs-on: ubuntu-latest
     steps:
       - name: Obtener el código
@@ -27,7 +27,7 @@ jobs:
       - name: Instalar dependencias
         run: npm install --no-audit --no-fund
 
-      - name: Ejecutar pruebas y generar LCOV
+      - name: Ejecutar pruebas y generar cobertura
         run: npx --yes c8@10.1.3 --include=assets/js/product-image-url.js --reporter=text --reporter=lcov --reports-dir=coverage npm test
 
       - name: Compilar aplicación
@@ -41,3 +41,9 @@ jobs:
           path: coverage/lcov.info
           if-no-files-found: warn
           retention-days: 14
+
+      - name: Analizar con SonarCloud
+        if: ${{ secrets.SONAR_TOKEN != '' }}
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
