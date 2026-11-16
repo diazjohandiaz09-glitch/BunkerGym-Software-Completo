@@ -348,6 +348,47 @@ test('admin: sesión, protección de rutas y estado público del supervisor', as
   assert.equal(publicServices.body.services.length, 12);
   assert.ok(publicServices.body.services.every(service => service.status === 'disabled'));
 
-  const protectedServices = await request('admin', '/api/admin/services');
-  assert.equal(protectedServices.response.status, 401);
+  const credentialsPath = path.join(privateDir, 'admin-initial-credentials.txt');
+  const credentials = fs.readFileSync(credentialsPath, 'utf8');
+  const initialPassword = credentials.match(/Contraseña inicial: (.+)/)?.[1];
+  assert.ok(initialPassword, 'debe entregar una contraseña inicial en archivo privado');
+
+  const login = await request('admin', '/api/admin/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Origin: 'http://localhost:5173'
+    },
+    body: JSON.stringify({ username: 'admin', password: initialPassword })
+  });
+  assert.equal(login.response.status, 200);
+  assert.equal(login.body.authenticated, true);
+  const setCookie = login.response.headers.get('set-cookie');
+  assert.match(setCookie, /HttpOnly/);
+  assert.match(setCookie, /SameSite=Strict/);
+  const cookie = setCookie.split(';')[0];
+  assert.equal(fs.existsSync(credentialsPath), false, 'debe borrar el archivo de contraseña inicial tras login');
+
+  const authenticatedHealth = await request('admin', '/api/admin/health', {
+    headers: { Cookie: cookie }
+  });
+  assert.equal(authenticatedHealth.response.status, 200);
+
+  const protectedServices = await request('admin', '/api/admin/services', {
+    headers: { Cookie: cookie }
+  });
+  assert.equal(protectedServices.response.status, 200);
+  assert.equal(protectedServices.body.services.length, 12);
+
+  const logout = await request('admin', '/api/admin/auth/logout', {
+    method: 'POST',
+    headers: { Origin: 'http://localhost:5173', Cookie: cookie }
+  });
+  assert.equal(logout.response.status, 200);
+  assert.equal(logout.body.authenticated, false);
+
+  const afterLogout = await request('admin', '/api/admin/services', {
+    headers: { Cookie: cookie }
+  });
+  assert.equal(afterLogout.response.status, 401);
 });
