@@ -14,6 +14,8 @@ jobs:
   test:
     name: Pruebas automatizadas, cobertura y compilación
     runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     steps:
       - name: Obtener el código
         uses: actions/checkout@v4
@@ -43,7 +45,7 @@ jobs:
           retention-days: 14
 
       - name: Analizar con SonarCloud
-        if: ${{ secrets.SONAR_TOKEN != '' }}
+        if: ${{ env.SONAR_TOKEN != '' }}
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
