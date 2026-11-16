@@ -320,7 +320,16 @@ test('admin: sesión, protección de rutas y estado público del supervisor', as
   children.set('admin', child);
   ports.set('admin', port);
   baseUrls.set('admin', `http://127.0.0.1:${port}`);
-  await waitForHealth('admin', port, child);
+  let adminReady = false;
+  for (let attempt = 0; attempt < 60; attempt++) {
+    if (child.exitCode !== null) throw new Error('admin terminó antes de iniciar.');
+    try {
+      const ready = await fetch(`${baseUrls.get('admin')}/api/admin/auth/session`);
+      if (ready.ok) { adminReady = true; break; }
+    } catch {}
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+  assert.equal(adminReady, true, 'admin debe iniciar y responder el endpoint de sesión');
 
   const session = await request('admin', '/api/admin/auth/session');
   assert.equal(session.response.status, 200);
