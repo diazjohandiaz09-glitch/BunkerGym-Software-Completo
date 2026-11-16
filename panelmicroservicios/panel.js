@@ -12,7 +12,7 @@ const logoutButton = document.getElementById('logout-button');
 const passwordOpenButton = document.getElementById('password-open');
 const passwordModal = document.getElementById('password-modal');
 const changePasswordForm = document.getElementById('change-password-form');
-const passwordSaveButton = document.getElementById('password-save');
+const credentialUpdateButton = document.getElementById('password-save');
 const changePasswordFeedback = document.getElementById('change-password-feedback');
 const busy = new Set();
 let services = [];
@@ -117,8 +117,8 @@ function closePasswordModal() {
   passwordModal.hidden = true;
   changePasswordForm.reset();
   changePasswordFeedback.textContent = '';
-  passwordSaveButton.disabled = false;
-  passwordSaveButton.innerHTML = 'GUARDAR CONTRASEÑA <span>↗</span>';
+  credentialUpdateButton.disabled = false;
+  credentialUpdateButton.innerHTML = 'GUARDAR CONTRASEÑA <span>↗</span>';
 }
 
 function openPasswordModal() {
@@ -159,8 +159,8 @@ changePasswordForm.addEventListener('submit', async event => {
     return;
   }
 
-  passwordSaveButton.disabled = true;
-  passwordSaveButton.textContent = 'ACTUALIZANDO…';
+  credentialUpdateButton.disabled = true;
+  credentialUpdateButton.textContent = 'ACTUALIZANDO…';
   changePasswordFeedback.textContent = '';
   try {
     const result = await api('/api/admin/auth/change-password', {
@@ -172,8 +172,8 @@ changePasswordForm.addEventListener('submit', async event => {
     await refresh({ quiet: true });
   } catch (error) {
     changePasswordFeedback.textContent = error.message || 'No se pudo actualizar la contraseña.';
-    passwordSaveButton.disabled = false;
-    passwordSaveButton.innerHTML = 'GUARDAR CONTRASEÑA <span>↗</span>';
+    credentialUpdateButton.disabled = false;
+    credentialUpdateButton.innerHTML = 'GUARDAR CONTRASEÑA <span>↗</span>';
   }
 });
 
