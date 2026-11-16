@@ -29,8 +29,15 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Verificar el manifiesto y el lockfile
+        run: |
+          pwd
+          ls -la package.json package-lock.json
+          git ls-files package-lock.json
+          test -s package-lock.json
+
       - name: Instalar dependencias bloqueadas sin ejecutar scripts de terceros
-        run: npm ci --package-lock=true --ignore-scripts --no-audit --no-fund
+        run: npm ci --prefix "$GITHUB_WORKSPACE" --ignore-scripts --no-audit --no-fund
 
       - name: Ejecutar pruebas con cobertura nativa de Node.js
         env:
