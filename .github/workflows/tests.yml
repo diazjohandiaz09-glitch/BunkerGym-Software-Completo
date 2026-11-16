@@ -34,6 +34,8 @@ jobs:
           pwd
           ls -la package.json package-lock.json
           git ls-files package-lock.json
+          node -e "const lock = JSON.parse(require('node:fs').readFileSync('package-lock.json', 'utf8')); console.log('lockfileVersion:', lock.lockfileVersion, 'packages:', Object.keys(lock.packages || {}).length)"
+          npm config get package-lock
           test -s package-lock.json
 
       - name: Instalar dependencias bloqueadas sin ejecutar scripts de terceros
