@@ -12,6 +12,7 @@ const testWorkspace = fs.mkdtempSync(path.join(projectRoot, '.bunker-integration
 const runtimeRoot = path.join(testWorkspace, 'runtime');
 fs.mkdirSync(runtimeRoot, { recursive: true });
 const runtimeServices = path.join(runtimeRoot, 'services');
+const coveragePreload = path.join(projectRoot, 'tests', 'integration', 'coverage-exit.cjs');
 const privateDir = path.resolve(runtimeRoot, '..', 'bunker_gym_web - copia.private');
 const token = 'integration-test-token-0123456789-abcdefghijklmnopqrstuvwxyz';
 const children = new Map();
@@ -63,7 +64,7 @@ async function startService(name, extraEnv = {}) {
     INTERNAL_SERVICE_TOKEN: token,
     ...extraEnv
   };
-  const child = spawn(process.execPath, [path.join(runtimeServices, name, 'src', 'server.js')], {
+  const child = spawn(process.execPath, ['--require', coveragePreload, path.join(runtimeServices, name, 'src', 'server.js')], {
     cwd: runtimeRoot,
     env,
     stdio: 'ignore'
@@ -111,7 +112,9 @@ after(async () => {
       if (child.exitCode === null) child.kill('SIGKILL');
     }, 2000).unref();
   })));
-  fs.rmSync(testWorkspace, { recursive: true, force: true });
+  if (process.env.BUNKER_KEEP_INTEGRATION_WORKSPACE !== '1') {
+    fs.rmSync(testWorkspace, { recursive: true, force: true });
+  }
 });
 
 test('microservicios de contenido: health y endpoint público responden JSON', async t => {
@@ -311,7 +314,7 @@ test('admin: sesión, protección de rutas y estado público del supervisor', as
   };
   fs.writeFileSync(path.join(runtimeRoot, 'data', 'microservices.json'), JSON.stringify(state));
   const port = await freePort();
-  const child = spawn(process.execPath, [path.join(runtimeServices, 'admin', 'src', 'server.js')], {
+  const child = spawn(process.execPath, ['--require', coveragePreload, path.join(runtimeServices, 'admin', 'src', 'server.js')], {
     cwd: runtimeRoot,
     env: { ...process.env, ADMIN_PORT: String(port), PORT: String(port) },
     stdio: 'ignore'
