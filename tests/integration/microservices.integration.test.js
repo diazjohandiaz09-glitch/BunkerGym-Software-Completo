@@ -9,7 +9,9 @@ import { fileURLToPath } from 'node:url';
 import test, { after, before } from 'node:test';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const runtimeRoot = fs.mkdtempSync(path.join(projectRoot, '.bunker-integration-'));
+const testWorkspace = fs.mkdtempSync(path.join(projectRoot, '.bunker-integration-'));
+const runtimeRoot = path.join(testWorkspace, 'runtime');
+fs.mkdirSync(runtimeRoot, { recursive: true });
 const runtimeServices = path.join(runtimeRoot, 'services');
 const privateDir = path.resolve(runtimeRoot, '..', 'bunker_gym_web - copia.private');
 const token = 'integration-test-token-0123456789-abcdefghijklmnopqrstuvwxyz';
@@ -110,8 +112,7 @@ after(async () => {
       if (child.exitCode === null) child.kill('SIGKILL');
     }, 2000).unref();
   })));
-  fs.rmSync(runtimeRoot, { recursive: true, force: true });
-  fs.rmSync(privateDir, { recursive: true, force: true });
+  fs.rmSync(testWorkspace, { recursive: true, force: true });
 });
 
 test('microservicios de contenido: health y endpoint público responden JSON', async t => {
@@ -214,7 +215,6 @@ test('store: protege operaciones internas, valida productos y controla inventari
 });
 
 test('orders + store: checkout, persistencia privada, cancelación y reposición', async () => {
-  const storePort = await freePort();
   await startService('store');
   await startService('orders', { STORE_SERVICE_URL: baseUrls.get('store') });
 
@@ -304,6 +304,7 @@ test('site settings: lectura pública, autenticación interna y validación de e
 });
 
 test('admin: sesión, protección de rutas y estado público del supervisor', async () => {
+  copyService('admin');
   const state = {
     gym: false, training: false, recovery: false, community: false,
     contact: false, plans: false, facilities: false, faq: false,
