@@ -2,11 +2,18 @@
   "name": "bunker-gym-web",
   "private": true,
   "type": "module",
-  "workspaces": ["services/*"],
+  "workspaces": [
+    "services/*"
+  ],
   "scripts": {
     "dev": "concurrently --kill-others-on-fail --names WEB,ADMIN \"vite --host 127.0.0.1\" \"npm run dev --workspace=@bunker/admin-service\"",
     "build": "vite build",
-    "test": "node --test"
+    "test": "node --test",
+    "test:coverage": "c8 --include=assets/js/product-image-url.js --include=**/.bunker-integration-*/runtime/services/**/*.js --reporter=text --reporter=lcov --reports-dir=coverage npm test"
   },
-  "devDependencies": { "concurrently": "^9.2.1", "vite": "^6.0.0" }
+  "devDependencies": {
+    "c8": "10.1.3",
+    "concurrently": "^9.2.1",
+    "vite": "^6.0.0"
+  }
 }
