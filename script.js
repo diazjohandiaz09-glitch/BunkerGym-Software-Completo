@@ -448,19 +448,6 @@ function getVisibleProducts() {
   });
 }
 
-function safeProductImageUrl(value) {
-  const fallback = '/assets/products/shirt.svg';
-  if (typeof value !== 'string' || value.length > 2048) return fallback;
-  try {
-    const parsed = new URL(value, window.location.origin);
-    const isLocalAsset = parsed.origin === window.location.origin && parsed.pathname.startsWith('/assets/');
-    const isSecureRemoteImage = parsed.protocol === 'https:' && !parsed.username && !parsed.password;
-    return isLocalAsset || isSecureRemoteImage ? parsed.href : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
 function renderStoreProducts() {
   if (!storeProductsGrid) return;
   storeProductsGrid.replaceChildren();
@@ -487,7 +474,7 @@ function renderStoreProducts() {
     const imageWrap = document.createElement('div');
     imageWrap.className = 'product-image-wrap';
     const image = document.createElement('img');
-    image.src = safeProductImageUrl(product.image);
+    image.src = window.safeProductImageUrl(product.image);
     image.alt = `Fotografía de referencia de ${product.name}`;
     image.loading = 'lazy';
     if (String(product.image).toLowerCase().endsWith('.jpg')) image.className = 'product-photo-real';
