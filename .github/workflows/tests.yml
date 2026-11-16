@@ -14,7 +14,6 @@ jobs:
   test:
     name: Pruebas automatizadas, cobertura y compilación
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     env:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     steps:
@@ -29,34 +28,21 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Verificar el manifiesto y el lockfile
-        run: |
-          pwd
-          ls -la package.json package-lock.json
-          git ls-files package-lock.json
-          node -e "const lock = JSON.parse(require('node:fs').readFileSync('package-lock.json', 'utf8')); console.log('lockfileVersion:', lock.lockfileVersion, 'packages:', Object.keys(lock.packages || {}).length)"
-          npm config get package-lock
-          test -s package-lock.json
+      - name: Instalar dependencias bloqueadas sin ejecutar scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
-      - name: Instalar dependencias bloqueadas sin ejecutar scripts de terceros
-        run: npm ci --prefix "$GITHUB_WORKSPACE" --ignore-scripts --no-audit --no-fund
-
-      - name: Ejecutar pruebas con cobertura nativa de Node.js
-        env:
-          NODE_V8_COVERAGE: coverage/v8
-        run: |
-          mkdir -p coverage/v8
-          npm test -- --experimental-test-coverage
+      - name: Ejecutar pruebas y generar cobertura
+        run: npm run test:coverage
 
       - name: Compilar aplicación
         run: npm run build
 
-      - name: Publicar datos de cobertura V8
+      - name: Publicar informe de cobertura
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: bunkergym-v8-coverage
-          path: coverage/v8/
+          name: bunkergym-coverage-lcov
+          path: coverage/lcov.info
           if-no-files-found: warn
           retention-days: 14
 
