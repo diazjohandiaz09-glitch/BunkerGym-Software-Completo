@@ -3,7 +3,6 @@ import { spawn } from 'node:child_process';
 import { once } from 'node:events';
 import fs from 'node:fs';
 import net from 'node:net';
-import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test, { after, before } from 'node:test';
@@ -16,7 +15,6 @@ const runtimeServices = path.join(runtimeRoot, 'services');
 const privateDir = path.resolve(runtimeRoot, '..', 'bunker_gym_web - copia.private');
 const token = 'integration-test-token-0123456789-abcdefghijklmnopqrstuvwxyz';
 const children = new Map();
-const ports = new Map();
 const baseUrls = new Map();
 
 async function freePort() {
@@ -55,6 +53,8 @@ async function waitForHealth(name, port, child) {
 }
 
 async function startService(name, extraEnv = {}) {
+  const existing = children.get(name);
+  if (existing && existing.exitCode === null) return baseUrls.get(name);
   copyService(name);
   const port = await freePort();
   const env = {
@@ -69,7 +69,6 @@ async function startService(name, extraEnv = {}) {
     stdio: 'ignore'
   });
   children.set(name, child);
-  ports.set(name, port);
   baseUrls.set(name, `http://127.0.0.1:${port}`);
   await waitForHealth(name, port, child);
   return baseUrls.get(name);
@@ -318,7 +317,6 @@ test('admin: sesión, protección de rutas y estado público del supervisor', as
     stdio: 'ignore'
   });
   children.set('admin', child);
-  ports.set('admin', port);
   baseUrls.set('admin', `http://127.0.0.1:${port}`);
   let adminReady = false;
   for (let attempt = 0; attempt < 60; attempt++) {
