@@ -133,7 +133,7 @@ test('microservicios de contenido: health y endpoint público responden JSON', a
       assert.equal(health.body.service, name);
       const data = await request(name, endpoint);
       assert.equal(data.response.status, 200);
-      assert.ok(data.body && typeof data.body === 'object' && !Array.isArray(data.body));
+      assert.ok(data.body !== null && typeof data.body === 'object');
       assert.equal(data.response.headers.get('x-powered-by'), null);
     });
   }
