@@ -30,7 +30,7 @@ jobs:
           cache: npm
 
       - name: Instalar dependencias bloqueadas sin ejecutar scripts de terceros
-        run: npm ci --ignore-scripts --no-audit --no-fund
+        run: npm ci --package-lock=true --ignore-scripts --no-audit --no-fund
 
       - name: Ejecutar pruebas con cobertura nativa de Node.js
         env:
