@@ -33,6 +33,12 @@ jobs:
 
       - name: Ejecutar pruebas y generar cobertura
         run: npm run test:coverage
+        env:
+          BUNKER_KEEP_INTEGRATION_WORKSPACE: '1'
+
+      - name: Limpiar entornos temporales de integración
+        if: always()
+        run: rm -rf .bunker-integration-*
 
       - name: Compilar aplicación
         run: npm run build
