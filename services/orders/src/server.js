@@ -6,14 +6,23 @@ import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../../..');
-const dataFile = path.join(root, 'data', 'orders.json');
+// Los pedidos contienen datos personales. Se almacenan fuera del document root de Vite.
+const privateDir = path.resolve(root, '..', 'bunker_gym_web - copia.private');
+const dataFile = path.join(privateDir, 'orders.json');
+const legacyDataFile = path.join(root, 'data', 'orders.json');
 const token = process.env.INTERNAL_SERVICE_TOKEN || '';
 const storeUrl = process.env.STORE_SERVICE_URL || 'http://127.0.0.1:3010';
 
 function atomicWrite(data) {
   const temp = `${dataFile}.${randomUUID()}.tmp`;
-  fs.writeFileSync(temp, JSON.stringify(data, null, 2), 'utf8');
-  fs.renameSync(temp, dataFile);
+  try {
+    fs.writeFileSync(temp, JSON.stringify(data, null, 2), { encoding: 'utf8', mode: 0o600, flag: 'wx' });
+    fs.renameSync(temp, dataFile);
+    try { fs.chmodSync(dataFile, 0o600); } catch {}
+  } catch (error) {
+    try { fs.rmSync(temp, { force: true }); } catch {}
+    throw error;
+  }
 }
 function sameToken(value) {
   if (!token || typeof value !== 'string') return false;
@@ -64,8 +73,23 @@ function validateCustomer(input) {
   if (customer.address.length < 6 || customer.city.length < 2) throw new Error('Completa la dirección y la ciudad.');
   return customer;
 }
-fs.mkdirSync(path.dirname(dataFile), { recursive: true });
-if (!fs.existsSync(dataFile)) atomicWrite([]);
+fs.mkdirSync(privateDir, { recursive: true, mode: 0o700 });
+if (!fs.existsSync(dataFile)) {
+  // Migra pedidos antiguos antes de dejar de usar el archivo dentro del proyecto web.
+  if (fs.existsSync(legacyDataFile)) {
+    const legacyContent = fs.readFileSync(legacyDataFile, 'utf8');
+    const parsedLegacy = JSON.parse(legacyContent);
+    if (!Array.isArray(parsedLegacy)) throw new Error('El archivo histórico de pedidos no contiene una lista válida.');
+    atomicWrite(parsedLegacy);
+    fs.rmSync(legacyDataFile, { force: true });
+  } else {
+    atomicWrite([]);
+  }
+} else {
+  try { fs.chmodSync(dataFile, 0o600); } catch {}
+  // Elimina la copia antigua del document root una vez confirmada la copia privada.
+  if (fs.existsSync(legacyDataFile)) fs.rmSync(legacyDataFile, { force: true });
+}
 
 const app = express();
 app.disable('x-powered-by');
